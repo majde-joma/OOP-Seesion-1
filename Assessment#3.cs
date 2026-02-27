@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Proiect_3
 {
     class TaskItem
@@ -24,10 +27,18 @@ namespace Proiect_3
         public void AddTask(string description)
         {
             tasks.Add(new TaskItem(description));
+            Console.WriteLine("Task added successfully!");
         }
 
         public void ViewTasks()
         {
+            // التحقق إذا كانت القائمة فارغة عند العرض
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("\n⚠️ You don’t have any tasks.");
+                return;
+            }
+
             Console.WriteLine("\n📋 Your Tasks:");
             for (int i = 0; i < tasks.Count; i++)
             {
@@ -37,17 +48,43 @@ namespace Proiect_3
 
         public void MarkAsCompleted(int index)
         {
+            // 1. التحقق أولاً إذا كانت القائمة فارغة
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("\n⚠️ You don’t have any tasks.");
+                return;
+            }
+
+            // 2. التحقق من صحة الرقم المدخل (Index)
             if (index >= 0 && index < tasks.Count)
             {
                 tasks[index].IsCompleted = true;
+                Console.WriteLine("Task marked as completed!");
+            }
+            else
+            {
+                Console.WriteLine($"\n❌ There is no task with index = {index + 1}.");
             }
         }
 
         public void RemoveTask(int index)
         {
+            // 1. التحقق أولاً إذا كانت القائمة فارغة
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("\n⚠️ You don’t have any tasks.");
+                return;
+            }
+
+            // 2. التحقق من صحة الرقم المدخل (Index)
             if (index >= 0 && index < tasks.Count)
             {
                 tasks.RemoveAt(index);
+                Console.WriteLine("Task removed successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"\n❌ There is no task with index = {index + 1}.");
             }
         }
     }
@@ -78,12 +115,26 @@ namespace Proiect_3
                 else if (input == "3")
                 {
                     Console.Write("Task Number: ");
-                    if (int.TryParse(Console.ReadLine(), out int num)) list.MarkAsCompleted(num - 1);
+                    if (int.TryParse(Console.ReadLine(), out int num))
+                    {
+                        list.MarkAsCompleted(num - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
                 }
                 else if (input == "4")
                 {
                     Console.Write("Task Number: ");
-                    if (int.TryParse(Console.ReadLine(), out int num)) list.RemoveTask(num - 1);
+                    if (int.TryParse(Console.ReadLine(), out int num))
+                    {
+                        list.RemoveTask(num - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
                 }
                 else if (input == "5")
                 {
@@ -92,5 +143,4 @@ namespace Proiect_3
             }
         }
     }
-
 }
